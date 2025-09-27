@@ -13,6 +13,10 @@
   * in the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
+  *Thu xung de cho stepper quay duoc
+  *Thu Chinh chan CCW de doi chieu quay
+  *them uart de chinh mode
+  *xem khi nao quay het 1 vong va hoan thien mode 3
   ******************************************************************************
   */
 /* USER CODE END Header */
