@@ -392,6 +392,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 				else{
 					HAL_TIM_Base_Start_IT(&htim1);
 					vong = 0;
+					flag=0;
 					nhap_vong = rxByte - '0';
 					last=1;
 					HAL_GPIO_WritePin(MD20_MD2U_ENA_GPIO_Port, MD20_MD2U_ENA_Pin, GPIO_PIN_RESET);
@@ -409,21 +410,24 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
         if(mode != 3 && mode!=0){
         	flag++;
-            if(flag >= 375){
-                vong++;
-                sprintf(buffer, "vong : %lu\r\n", vong);
-                printf_uart(buffer);
-
+            if(flag >= 199){
                 if(mode == 2){
+                	vong++;
+					sprintf(buffer, "vong : %lu\r\n", vong);
+					printf_uart(buffer);
                 	printf_uart("nguoc lai\n");
                     HAL_GPIO_TogglePin(MD20_MD2U_CCW_GPIO_Port, MD20_MD2U_CCW_Pin);
+                }
+                else{
+                	HAL_GPIO_WritePin(MD20_MD2U_ENA_GPIO_Port, MD20_MD2U_ENA_Pin, GPIO_PIN_SET);
+                	HAL_TIM_Base_Stop_IT(&htim1);
                 }
                 flag=0;
             }
         }
         else {
         	flag++;
-        	if(flag >= 375){
+        	if(flag >= 199){
 				flag=0;
 				vong++;
 				sprintf(buffer, "vong : %lu\r\n", vong);
